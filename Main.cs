@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using HTTP;
+using System.IO;
+using System.Collections.Generic;
 
 namespace GalleryServer
 {
@@ -20,11 +22,10 @@ namespace GalleryServer
 			ConsoleOutputLogger.writeLogfile = true;
 
 			#region Start HTTP Server
-			HttpServer httpServer = new HttpServer(8080, "127.0.0.1", ".", ConsoleOutputLogger);
+			HttpServer httpServer = new HttpServer(8080, "127.0.0.1", "./web", ConsoleOutputLogger);
 			Thread http_server_thread = new Thread(new ThreadStart(httpServer.listen));
 			http_server_thread.Start();
 			#endregion
-
 		}
 	}
 }

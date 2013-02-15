@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -9,7 +9,6 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>GalleryServer</RootNamespace>
     <AssemblyName>GalleryServer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -21,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
     <Externalconsole>True</Externalconsole>
+    <ConsolePause>False</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
@@ -35,6 +35,7 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -42,9 +43,19 @@
     <Compile Include="HTTP\HTTPProcessor.cs" />
     <Compile Include="HTTP\HTTPServer.cs" />
     <Compile Include="ConsoleOutputLogger.cs" />
+    <Compile Include="FileManagement\FileManagement.cs" />
+    <Compile Include="ThumbnailCache\ThumbnailCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="HTTP\" />
+    <Folder Include="FileManagement\" />
+    <Folder Include="ThumbnailCache\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MetaDataExtractorCSharp240d\MetaDataExtractor.csproj">
+      <Project>{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}</Project>
+      <Name>MetaDataExtractor</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

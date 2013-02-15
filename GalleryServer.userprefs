@@ -1,15 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FileManagement/FileManagement.cs">
     <Files>
-      <File FileName="Main.cs" Line="29" Column="3" />
+      <File FileName="Main.cs" Line="37" Column="1" />
       <File FileName="HTTP/HTTPProcessor.cs" Line="295" Column="1" />
-      <File FileName="HTTP/HTTPServer.cs" Line="7" Column="21" />
-      <File FileName="ConsoleOutputLogger.cs" Line="77" Column="33" />
+      <File FileName="FileManagement/FileManagement.cs" Line="49" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="GalleryServer" expanded="True" selected="True">
+            <Node name="ExifTag" expanded="True" />
+            <Node name="FileManagement" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/bietiekay/code/GalleryServer/FileManagement/FileManagement.cs" line="35" />
+      <Breakpoint file="/Users/bietiekay/code/GalleryServer/FileManagement/FileManagement.cs" line="22" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

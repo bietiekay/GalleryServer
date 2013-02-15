@@ -36,6 +36,7 @@ namespace HTTP
 		private byte[] bytes = new byte[20480];
 		private FileInfo docRootFile;
 		private String HTTPServer_DocumentRoot;
+		private FileManagement FileManager;
 		private ConsoleOutputLogger ConsoleOutputLogger;
 		#endregion
 
@@ -58,6 +59,7 @@ namespace HTTP
 			docRootFile = new FileInfo(HTTPServer_DocumentRoot);
 			headers = new Hashtable();
             ConsoleOutputLogger = Logger;
+			FileManager = new FileManagement();
 		}
 		#endregion
 
@@ -295,7 +297,25 @@ namespace HTTP
 				querystring = "";
 				url = original_url;
 
-				if (1==1)
+				if (url.ToUpper().StartsWith("/PICS/"))
+				{
+					StringBuilder Output = new StringBuilder();
+					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs("./pics/");
+
+					foreach(FileInfo jpg in Jpegs)
+					{
+						Output.AppendLine(jpg.Name);
+					}
+
+					int left = new UTF8Encoding().GetByteCount(Output.ToString());
+					//writeSuccess(left, "application/json");
+					writeSuccess(left, "text/html");
+					byte[] buffer = new UTF8Encoding().GetBytes(Output.ToString());
+					ns.Write(buffer, 0, left);
+					ns.Flush();
+					return;
+				}
+				else
 				{
 					#region File request (everything else...)
 
