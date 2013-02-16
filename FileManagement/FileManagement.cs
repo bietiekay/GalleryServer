@@ -96,7 +96,6 @@ namespace GalleryServer
 
 			return Output;
 		}
-
 	}
 }
 

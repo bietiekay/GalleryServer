@@ -340,7 +340,7 @@ namespace HTTP
 								// we've found the day, output all jpgs here...
 								foreach(FileInfo _file in sortedByDays[Day])
 								{
-									OutputObj.Add(_file.Name,"/picture/"+_file.Name+_file.LastWriteTime.Ticks);
+									OutputObj.Add(_file.Name+_file.LastWriteTime.Ticks,"/picture/"+_file.Name+_file.LastWriteTime.Ticks);
 								}
 							}
 						}
