@@ -5,12 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalleryServer", "GallerySer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaDataExtractor", "MetaDataExtractorCSharp240d\MetaDataExtractor.csproj", "{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json", "Newtonsoft.Json\Newtonsoft.Json.csproj", "{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|x86.Build.0 = Debug|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|x86.Build.0 = Release|Any CPU
 		{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}.Debug|x86.Build.0 = Debug|Any CPU
 		{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}.Release|x86.ActiveCfg = Release|Any CPU

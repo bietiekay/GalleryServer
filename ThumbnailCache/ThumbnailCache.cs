@@ -10,15 +10,14 @@ namespace GalleryServer
 	public class ThumbnailCache
 	{
 		private Int32 MaximumCacheSize = 200;
-		private String CachePath;
 		private List<String> IDs; // the list of ids, where we add to the end and remove from the beginning
 		private Dictionary<String,byte[]> Cache;	// strict in-memory...
 
-		public ThumbnailCache (String CacheDirectory, Int32 MaximumCachedFiles)
+		public ThumbnailCache (Int32 MaximumCachedFiles)
 		{
-			CachePath = CacheDirectory;
 			MaximumCacheSize = MaximumCachedFiles;
 			Cache = new Dictionary<string, byte[]>();
+			IDs = new List<string>();
 		}
 
 		#region add to cache
@@ -75,7 +74,8 @@ namespace GalleryServer
 			}
 			else
 			{
-				return Cache[GenerateThumbnail(OriginalJpegFile)];
+				String ThumbnailName = GenerateThumbnail(OriginalJpegFile);
+				return Cache[Key];
 			}
 		}
 		#endregion

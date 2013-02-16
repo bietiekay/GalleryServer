@@ -74,14 +74,27 @@ namespace GalleryServer
 			return Output;
 		}
 
-		public String AllJpegsByDay(List<FileInfo> AllFiles)
+		public Dictionary<String,List<FileInfo>> SortAllJpegsByDay(List<FileInfo> AllFiles)
 		{
+			Dictionary<String,List<FileInfo>> Output = new Dictionary<string, List<FileInfo>>();
+
 			foreach(FileInfo jpg in AllFiles)
 			{
-				//Output.AppendLine(jpg.Name);
+				if (Output.ContainsKey(jpg.LastWriteTime.DayOfWeek.ToString()))
+				{
+					// we got one, so let's add this jpeg there
+					Output[jpg.LastWriteTime.DayOfWeek.ToString()].Add(jpg);
+				}
+				else
+				{
+					// add it as if new
+					Output.Add(jpg.LastWriteTime.DayOfWeek.ToString(),new List<FileInfo>());
+					Output[jpg.LastWriteTime.DayOfWeek.ToString()].Add(jpg);
+				}
+
 			}
 
-			return "";
+			return Output;
 		}
 
 	}

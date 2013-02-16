@@ -2,26 +2,28 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="FileManagement/FileManagement.cs">
     <Files>
-      <File FileName="Main.cs" Line="37" Column="1" />
-      <File FileName="HTTP/HTTPProcessor.cs" Line="295" Column="1" />
-      <File FileName="FileManagement/FileManagement.cs" Line="49" Column="1" />
+      <File FileName="FileManagement/FileManagement.cs" Line="71" Column="6" />
+      <File FileName="MetaDataExtractorCSharp240d/com/drew/metadata/Metadata.cs" Line="53" Column="1" />
+      <File FileName="ThumbnailCache/ThumbnailCache.cs" Line="85" Column="1" />
+      <File FileName="HTTP/HTTPProcessor.cs" Line="305" Column="1" />
+      <File FileName="Main.cs" Line="28" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="GalleryServer" expanded="True" selected="True">
-            <Node name="ExifTag" expanded="True" />
-            <Node name="FileManagement" expanded="True" />
+          <Node name="GalleryServer" expanded="True">
+            <Node name="FileManagement" expanded="True">
+              <Node name="FileManagement.cs" selected="True" />
+            </Node>
+            <Node name="HTTP" expanded="True" />
+            <Node name="ThumbnailCache" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/bietiekay/code/GalleryServer/FileManagement/FileManagement.cs" line="35" />
-      <Breakpoint file="/Users/bietiekay/code/GalleryServer/FileManagement/FileManagement.cs" line="22" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

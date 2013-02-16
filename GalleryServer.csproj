@@ -57,5 +57,9 @@
       <Project>{B46F6C6C-9184-41AF-8F8B-E0084752CA7C}</Project>
       <Name>MetaDataExtractor</Name>
     </ProjectReference>
+    <ProjectReference Include="Newtonsoft.Json\Newtonsoft.Json.csproj">
+      <Project>{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}</Project>
+      <Name>Newtonsoft.Json</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

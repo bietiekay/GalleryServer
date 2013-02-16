@@ -9,6 +9,7 @@ using System.Threading;
 using System.Web;
 using System.Net;
 using GalleryServer;
+using Newtonsoft.Json;
 
 namespace HTTP
 {
@@ -38,6 +39,7 @@ namespace HTTP
 		private String HTTPServer_DocumentRoot;
 		private FileManagement FileManager;
 		private ConsoleOutputLogger ConsoleOutputLogger;
+		private ThumbnailCache ThumbCache;
 		#endregion
 
 		#region Constructor
@@ -60,6 +62,7 @@ namespace HTTP
 			headers = new Hashtable();
             ConsoleOutputLogger = Logger;
 			FileManager = new FileManagement();
+			ThumbCache = new ThumbnailCache(100);
 		}
 		#endregion
 
@@ -299,21 +302,124 @@ namespace HTTP
 
 				if (url.ToUpper().StartsWith("/PICS/"))
 				{
-					StringBuilder Output = new StringBuilder();
 					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs("./pics/");
+					Dictionary<String,List<FileInfo>> sortedByDays = FileManager.SortAllJpegsByDay(Jpegs);
+
+					// let's find out if we're going to go deeper...
+
+					if (url.ToUpper().EndsWith("/PICS/"))
+					{
+						#region this is the first level /pics/
+						// the first level just get's you the days of which pics are available...
+						Dictionary<String,String> OutputObj = new Dictionary<string, string>();
+						foreach(String Date in sortedByDays.Keys)
+						{
+							OutputObj.Add(Date,"/pics/"+Date.ToLower()+"/");
+						}
+						string Output = JsonConvert.SerializeObject(OutputObj,Formatting.Indented);
+						
+						int left = new UTF8Encoding().GetByteCount(Output);
+						//writeSuccess(left, "application/json");
+						writeSuccess(left, "text/html");
+						byte[] buffer = new UTF8Encoding().GetBytes(Output);
+						ns.Write(buffer, 0, left);
+						ns.Flush();
+						return;
+						#endregion
+					}
+					else
+					{
+						#region Here we go into deeper levels, first level will be day
+						url = url.Remove(0,6);
+						Dictionary<String,String> OutputObj = new Dictionary<string, string>();
+
+						foreach(String Day in sortedByDays.Keys)
+						{
+							if (url.ToUpper().EndsWith(Day.ToUpper()))
+							{
+								// we've found the day, output all jpgs here...
+								foreach(FileInfo _file in sortedByDays[Day])
+								{
+									OutputObj.Add(_file.Name,"/picture/"+_file.Name+_file.LastWriteTime.Ticks);
+								}
+							}
+						}
+						string Output = JsonConvert.SerializeObject(OutputObj,Formatting.Indented);
+						
+						int left = new UTF8Encoding().GetByteCount(Output);
+						//writeSuccess(left, "application/json");
+						writeSuccess(left, "text/html");
+						byte[] buffer = new UTF8Encoding().GetBytes(Output);
+						ns.Write(buffer, 0, left);
+						ns.Flush();
+						return;
+						#endregion
+					}
+				}
+				else
+				if (url.ToUpper().StartsWith("/PICTURE/"))
+				{
+					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs("./pics/");
+					// remove the /picture thingie...
+					url = url.Remove(0,9);
 
 					foreach(FileInfo jpg in Jpegs)
 					{
-						Output.AppendLine(jpg.Name);
-					}
+						if (url.ToUpper().StartsWith(jpg.Name+jpg.LastWriteTime.Ticks))
+						{
+							// we've found the picture, now we determine if we want the picture or the thumbnail...
+							if (url.ToUpper().EndsWith("/THUMBNAIL"))
+							{
+								// it's the thumbnail...
+								byte[] ThumbnailData = ThumbCache.RetrieveThumbnail(jpg);
+								Stream stream = new MemoryStream(ThumbnailData);
+								long left = ThumbnailData.Length;
+								long bytesSent = 0;
+								writeSuccess(left, "image/jpeg");
 
-					int left = new UTF8Encoding().GetByteCount(Output.ToString());
-					//writeSuccess(left, "application/json");
-					writeSuccess(left, "text/html");
-					byte[] buffer = new UTF8Encoding().GetBytes(Output.ToString());
-					ns.Write(buffer, 0, left);
-					ns.Flush();
-					return;
+								BufferedStream bs = new BufferedStream(stream);
+
+								// for performance reasons...
+								int read;
+								while (left > 0 && (read = bs.Read(bytes, 0, (int)Math.Min(left, bytes.Length))) != 0)
+								{
+									ns.Write(bytes, 0, read);
+									bytesSent = bytesSent + read;
+									left -= read;
+								}
+								ns.Flush();
+								bs.Close();
+								stream.Close();
+								return;
+							}
+							else
+							{
+								#region throw the original file out...
+								FileStream fs = null;
+								BufferedStream bs = null;
+								long bytesSent = 0;
+								// Open the file for binary transfer
+								fs = new FileStream(jpg.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+								long left = jpg.Length;
+								writeSuccess(left, "image/jpeg");
+								bs = new BufferedStream(fs);
+
+								// for performance reasons...
+								int read;
+								while (left > 0 && (read = bs.Read(bytes, 0, (int)Math.Min(left, bytes.Length))) != 0)
+								{
+									ns.Write(bytes, 0, read);
+									bytesSent = bytesSent + read;
+									left -= read;
+								}
+								ns.Flush();
+								bs.Close();
+								fs.Close();
+								return;
+								#endregion
+							}
+						}
+					}
 				}
 				else
 				{
@@ -427,6 +533,7 @@ namespace HTTP
 										ns.Flush();
 										bs.Close();
 										fs.Close();
+										
 									}
 							}
 							catch (Exception e)
