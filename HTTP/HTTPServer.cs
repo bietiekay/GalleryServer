@@ -20,6 +20,7 @@ namespace HTTP
         private String HTTPServer_ListeningIP;
         private String HTTPServer_DocumentRoot;
         private ConsoleOutputLogger ConsoleOutputLogger;
+        private ThumbnailCache ThumbCache;
         #endregion
 
         #region Construction
@@ -29,6 +30,7 @@ namespace HTTP
             HTTPServer_ListeningIP = HTTP_ListeningIP;
             HTTPServer_DocumentRoot = HTTP_DocumentRoot;
             ConsoleOutputLogger = Logger;
+            ThumbCache = new ThumbnailCache(GalleryServer.Properties.Settings.Default.CacheImages);
         }
         #endregion
 
@@ -57,13 +59,13 @@ namespace HTTP
                         Socket s = listener.Accept();
 
                         // Create a new processor for this request
-                        HttpProcessor processor = new HttpProcessor(s, HTTPServer_DocumentRoot, ConsoleOutputLogger);
+                        HttpProcessor processor = new HttpProcessor(s, HTTPServer_DocumentRoot, ConsoleOutputLogger, ThumbCache);
 
 
                         // Dispatch that processor in its own thread
                         Thread thread = new Thread(new ThreadStart(processor.process));
                         thread.Start();
-                        Thread.Sleep(10);
+                        //Thread.Sleep(10);
                         //processor.process();
 
                     }

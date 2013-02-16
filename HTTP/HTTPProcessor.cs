@@ -54,7 +54,7 @@ namespace HTTP
 		/// <param name="docRoot">Root-Directory of the HTTP Server</param>
 		/// <param name="s">the Socket to work with</param>
 		/// <param name="webserver">the "master" HttpServer Object of this Client</param>
-		public HttpProcessor(Socket s, String HTTP_DocumentRoot, ConsoleOutputLogger Logger)
+		public HttpProcessor(Socket s, String HTTP_DocumentRoot, ConsoleOutputLogger Logger, ThumbnailCache Thumb_Cache)
 		{
 			this.s = s;
 			HTTPServer_DocumentRoot = HTTP_DocumentRoot;
@@ -62,7 +62,7 @@ namespace HTTP
 			headers = new Hashtable();
             ConsoleOutputLogger = Logger;
 			FileManager = new FileManagement();
-			ThumbCache = new ThumbnailCache(100);
+            ThumbCache = Thumb_Cache;
 		}
 		#endregion
 
@@ -302,7 +302,7 @@ namespace HTTP
 
 				if (url.ToUpper().StartsWith("/PICS/"))
 				{
-					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs("./pics/");
+					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs(GalleryServer.Properties.Settings.Default.PicturesPath);
 					Dictionary<String,List<FileInfo>> sortedByDays = FileManager.SortAllJpegsByDay(Jpegs);
 
 					// let's find out if we're going to go deeper...
@@ -314,7 +314,7 @@ namespace HTTP
 						Dictionary<String,String> OutputObj = new Dictionary<string, string>();
 						foreach(String Date in sortedByDays.Keys)
 						{
-							OutputObj.Add(Date,"/pics/"+Date.ToLower()+"/");
+							OutputObj.Add(Date,"/pics/"+Date.ToLower());
 						}
 						string Output = JsonConvert.SerializeObject(OutputObj,Formatting.Indented);
 						
@@ -359,7 +359,7 @@ namespace HTTP
 				else
 				if (url.ToUpper().StartsWith("/PICTURE/"))
 				{
-					List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs("./pics/");
+                    List<FileInfo> Jpegs = FileManager.EnumerateAllJPGs(GalleryServer.Properties.Settings.Default.PicturesPath);
 					// remove the /picture thingie...
 					url = url.Remove(0,9);
 

@@ -22,7 +22,7 @@ namespace GalleryServer
 			ConsoleOutputLogger.writeLogfile = true;
 
 			#region Start HTTP Server
-			HttpServer httpServer = new HttpServer(8080, "127.0.0.1", "./web", ConsoleOutputLogger);
+			HttpServer httpServer = new HttpServer(Properties.Settings.Default.HTTPPort, Properties.Settings.Default.HTTPIP, Properties.Settings.Default.WebPath, ConsoleOutputLogger);
 			Thread http_server_thread = new Thread(new ThreadStart(httpServer.listen));
 			http_server_thread.Start();
 			#endregion

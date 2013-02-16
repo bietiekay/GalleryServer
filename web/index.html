@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head>
+<title>GalleryServer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script type="text/javascript" src="js/prettify.js"></script>                                   <!-- PRETTIFY -->
+<script type="text/javascript" src="js/kickstart.js"></script>                                  <!-- KICKSTART -->
+
+<script type="text/javascript" src="days_control.js"></script>                                  <!-- DayControl Ajaxy -->
+
+<link rel="stylesheet" type="text/css" href="css/kickstart.css" media="all" />                  <!-- KICKSTART -->
+<link rel="stylesheet" type="text/css" href="style.css" media="all" />                          <!-- CUSTOM STYLES -->
+</head><body>
+
+<!-- ===================================== END HEADER ===================================== -->
+<div class="wrap">
+	<div class="col_2">
+		<ul id="menu" class="menu vertical">
+		</ul>
+	</div>
+	<div class="col_10">
+		<div id="gallery" class="gallery">
+		</div>
+	</div>
+</div>
+<!-- ===================================== START FOOTER ===================================== -->
+
+   <script>
+   // get all tabs and fill them...
+   $(document).ready(function()
+   {
+   		ReceiveDayData("/pics/");
+   });
+</script>
+
+
+</body></html>
